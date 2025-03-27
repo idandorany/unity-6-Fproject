@@ -6,7 +6,7 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
 
-    public Slider healthBar; // link this in the Inspector
+    public Slider healthBar; 
 
     void Start()
     {
@@ -45,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("Player died.");
 
-        GameOverManager gm = FindObjectOfType<GameOverManager>();
+        GameOverManager gm = FindFirstObjectByType<GameOverManager>();
         if (gm != null)
         {
             gm.ShowGameOver();

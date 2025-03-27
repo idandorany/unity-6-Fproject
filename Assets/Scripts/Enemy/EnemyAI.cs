@@ -5,7 +5,6 @@ public class EnemyAI : MonoBehaviour
 {
     public Transform player;
     public Transform[] patrolPoints;
-    public float chaseRange = 10f;
     public float attackRange = 2f;
     public int damageAmount = 10;
     public float damageCooldown = 1f;
@@ -16,6 +15,12 @@ public class EnemyAI : MonoBehaviour
 
     private enum State { Patrolling, Chasing, Attacking }
     private State currentState;
+
+    [Header("Vision Settings")]
+    public float viewAngle = 90f;
+    public float viewDistance = 10f;
+    public LayerMask playerMask;
+    public LayerMask obstacleMask;
 
     void Start()
     {
@@ -35,7 +40,7 @@ public class EnemyAI : MonoBehaviour
             case State.Patrolling:
                 PatrolBehavior();
 
-                if (distance <= chaseRange)
+                if (CanSeePlayer())
                     currentState = State.Chasing;
                 break;
 
@@ -47,7 +52,7 @@ public class EnemyAI : MonoBehaviour
                     currentState = State.Attacking;
                     agent.ResetPath();
                 }
-                else if (distance > chaseRange)
+                else if (!CanSeePlayer())
                 {
                     currentState = State.Patrolling;
                     agent.SetDestination(patrolPoints[currentPatrolIndex].position);
@@ -94,5 +99,24 @@ public class EnemyAI : MonoBehaviour
     void ResetDamage()
     {
         canDamage = true;
+    }
+
+    bool CanSeePlayer()
+    {
+        Vector3 dirToPlayer = (player.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (Vector3.Angle(transform.forward, dirToPlayer) < viewAngle / 2f)
+        {
+            if (distanceToPlayer <= viewDistance)
+            {
+                if (!Physics.Raycast(transform.position, dirToPlayer, distanceToPlayer, obstacleMask))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
