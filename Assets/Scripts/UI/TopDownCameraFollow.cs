@@ -9,6 +9,19 @@ public class TopDownCameraFollow : MonoBehaviour
 
     private float currentAngle = 0f;
 
+    void Start()
+    {
+        // Auto-assign player at start if not manually set
+        if (target == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                target = player.transform;
+            }
+        }
+    }
+
     void Update()
     {
         // Rotate with Q and E keys (or customize)
