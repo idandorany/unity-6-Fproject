@@ -5,8 +5,6 @@ public class EnemyHealth : MonoBehaviour
 {
     public int health = 30;
     private int currentHealth;
-    public EnemyData enemyData;
-    
 
     public Slider healthBar; 
 
@@ -18,7 +16,6 @@ public class EnemyHealth : MonoBehaviour
         {
             healthBar.maxValue = health;
             healthBar.value = health;
-            currentHealth = enemyData.maxHealth; 
         }
 
         Debug.Log($"{gameObject.name} spawned with {currentHealth} HP.");

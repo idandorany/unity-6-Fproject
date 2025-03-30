@@ -1,21 +1,16 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
     public GameObject settingsPanel;
-    public AudioMixer audioMixer; 
     public Slider volumeSlider;
 
-    void Start()
+    private void Start()
     {
-        if (PlayerPrefs.HasKey("MasterVolume"))
-        {
-            float volume = PlayerPrefs.GetFloat("MasterVolume");
-            volumeSlider.value = volume;
-            SetVolume(volume);
-        }
+        volumeSlider.onValueChanged.AddListener(SetVolume);
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume", 1f); // Load saved volume
+        SetVolume(volumeSlider.value); // Apply it
     }
 
     public void OpenSettings()
@@ -28,9 +23,9 @@ public class SettingsManager : MonoBehaviour
         settingsPanel.SetActive(false);
     }
 
-    public void SetVolume(float volume)
+    public void SetVolume(float value)
     {
-        audioMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20); 
-        PlayerPrefs.SetFloat("MasterVolume", volume);
+        AudioListener.volume = value;
+        PlayerPrefs.SetFloat("Volume", value);
     }
 }

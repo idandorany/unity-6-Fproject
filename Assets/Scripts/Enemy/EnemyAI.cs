@@ -8,7 +8,6 @@ public class EnemyAI : MonoBehaviour
     public float attackRange = 2f;
     public int damageAmount = 10;
     public float damageCooldown = 1f;
-    public EnemyData enemyData;
 
     private NavMeshAgent agent;
     private int currentPatrolIndex = 0;
@@ -27,8 +26,6 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         currentState = State.Patrolling;
-        damageAmount = enemyData.damage;
-        agent.speed = enemyData.moveSpeed;
 
         if (patrolPoints.Length > 0)
             agent.SetDestination(patrolPoints[0].position);
