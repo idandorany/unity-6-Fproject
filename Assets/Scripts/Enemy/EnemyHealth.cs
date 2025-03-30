@@ -39,7 +39,15 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
-        Debug.Log($"{gameObject.name} has died.");
+        LevelManager manager = FindFirstObjectByType<LevelManager>();
+        if (manager != null)
+        {
+            manager.OnEnemyKilled();
+        }
+        else
+        {
+            Debug.LogWarning("LevelManager not found!");
+        }
         Destroy(gameObject);
     }
 }

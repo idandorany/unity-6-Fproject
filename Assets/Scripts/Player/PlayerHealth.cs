@@ -4,13 +4,16 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
     public Slider healthBar; 
 
     void Start()
     {
+        
+        UpdateHealthBar();
         currentHealth = maxHealth;
+        
 
         if (healthBar != null)
             healthBar.maxValue = maxHealth;
@@ -54,5 +57,8 @@ public class PlayerHealth : MonoBehaviour
         // Optional: Disable movement or other systems
         gameObject.SetActive(false);
     }
-
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 }
