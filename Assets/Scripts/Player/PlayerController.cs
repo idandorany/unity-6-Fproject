@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
     private NavMeshAgent agent;
     private Vector2 moveInput;
     private Weapon weapon;
-    private Animator animator;
+    public Animator animator;
 
     public float rotationSpeed = 10f;
 
@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
         agent = GetComponent<NavMeshAgent>();
         weapon = GetComponentInChildren<Weapon>();
         animator = GetComponent<Animator>();
+
 
         // Optional: Make sure the agent doesn't auto-rotate
         agent.updateRotation = false;
@@ -70,7 +71,6 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
 
             Collider weaponCollider = weapon.GetComponent<Collider>();
             weaponCollider.enabled = true;
-
             Invoke(nameof(DisableWeaponCollider), 0.1f);
         }
     }

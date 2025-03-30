@@ -1348,8 +1348,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2858467, y: 1, z: 5.416772}
-  m_Center: {x: 0.28773308, y: 0, z: 0.8112912}
+  m_Size: {x: 7.9031677, y: 1, z: 3.6306396}
+  m_Center: {x: -0.41584778, y: 0, z: -0.08177996}
 --- !u!114 &482302374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1371,14 +1371,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 482302372}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -198.8, y: 53.81, z: -1.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -198.8, y: 54.32, z: -1.1}
+  m_LocalScale: {x: 0.5, y: 3, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 321202878}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &505394494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,7 +1712,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 552126671}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: d89338b60e1554342b6b95ed18ce84ce, type: 3}
   m_Controller: {fileID: 9100000, guid: b37d6564ea82a4b4ba65916c40e236ea, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -6318,7 +6318,6 @@ SceneRoots:
   - {fileID: 412136310}
   - {fileID: 304472295}
   - {fileID: 122597699}
-  - {fileID: 552126670}
   - {fileID: 1213484708}
   - {fileID: 70606975}
   - {fileID: 1922235694}
@@ -6328,5 +6327,6 @@ SceneRoots:
   - {fileID: 545768041}
   - {fileID: 466319720}
   - {fileID: 482302375}
+  - {fileID: 552126670}
   - {fileID: 1306778528}
   - {fileID: 1412638627}
