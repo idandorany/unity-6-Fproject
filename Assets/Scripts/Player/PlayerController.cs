@@ -21,7 +21,6 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
         animator = GetComponent<Animator>();
 
 
-        // Optional: Make sure the agent doesn't auto-rotate
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -33,16 +32,13 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
     {
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
 
-        // Set animation Speed based on movement magnitude
         animator.SetFloat("Speed", moveDirection.magnitude);
 
-        // Move using NavMeshAgent
         if (moveDirection.sqrMagnitude > 0.001f)
         {
             Vector3 targetPosition = transform.position + moveDirection.normalized;
             agent.SetDestination(targetPosition);
 
-            // Rotate toward movement
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             Quaternion smoothRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * 100f);
             transform.rotation = smoothRotation;
@@ -57,7 +53,6 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
     {
         moveInput = context.ReadValue<Vector2>();
 
-        // Filter out ghost input
         if (moveInput.magnitude < 0.01f)
             moveInput = Vector2.zero;
     }

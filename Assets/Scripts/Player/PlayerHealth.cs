@@ -54,7 +54,6 @@ public class PlayerHealth : MonoBehaviour
             gm.ShowGameOver();
         }
 
-        // Optional: Disable movement or other systems
         gameObject.SetActive(false);
     }
     void Awake()

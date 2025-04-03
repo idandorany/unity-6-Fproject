@@ -11,7 +11,6 @@ public class TopDownCameraFollow : MonoBehaviour
 
     void Update()
     {
-        // Rotate with Q and E keys (or customize)
         if (Input.GetKey(KeyCode.Q))
             currentAngle -= rotationSpeed * Time.deltaTime;
 
@@ -27,7 +26,6 @@ public class TopDownCameraFollow : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, currentAngle, 0);
         Vector3 offset = rotation * new Vector3(0, 0, -distance);
 
-        // Set camera position & height
         transform.position = target.position + offset + Vector3.up * height;
 
         // Look at player
