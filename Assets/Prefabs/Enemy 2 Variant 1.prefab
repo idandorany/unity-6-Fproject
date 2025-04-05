@@ -16,9 +16,17 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4419309464621356883, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a5cae00e50a56f843ae47bd2990935c6, type: 2}
     - target: {fileID: 5515920005512986639, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
       propertyPath: m_Name
       value: Enemy 2 Variant 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7504879026462939205, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7859375598347853595, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -61,6 +69,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9043688228340198135, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
+      propertyPath: viewAngle
+      value: 140
+      objectReference: {fileID: 0}
+    - target: {fileID: 9043688228340198135, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
       propertyPath: damageAmount
       value: 15
       objectReference: {fileID: 0}
@@ -71,5 +83,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5515920005512986639, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3327155367299202635}
   m_SourcePrefab: {fileID: 100100000, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
+--- !u!1 &9066180798091852502 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5515920005512986639, guid: badee8189ac307f41aef0db7650ffca5, type: 3}
+  m_PrefabInstance: {fileID: 3557271287576001241}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3327155367299202635
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9066180798091852502}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: ddafca45ac3680e49b856547db5f9d10, type: 3}
+  m_Controller: {fileID: 9100000, guid: a5cae00e50a56f843ae47bd2990935c6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

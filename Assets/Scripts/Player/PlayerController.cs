@@ -5,21 +5,23 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
 {
     private PlayerControls controls;
-    private NavMeshAgent agent;
+
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private Animator animator;
+
     private Vector2 moveInput;
-    private Weapon weapon;
-    public Animator animator;
 
     public float rotationSpeed = 10f;
+    public float attackCooldown = 0.8f;
+
+    private bool isAttacking = false;
+    private bool canAttack = true;
 
     void Awake()
     {
         controls = new PlayerControls();
         controls.Player.SetCallbacks(this);
-        agent = GetComponent<NavMeshAgent>();
-        weapon = GetComponentInChildren<Weapon>();
-        animator = GetComponent<Animator>();
-
 
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -30,8 +32,13 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
 
     void Update()
     {
-        Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
+        if (isAttacking)
+        {
+            agent.ResetPath();
+            return;
+        }
 
+        Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
         animator.SetFloat("Speed", moveDirection.magnitude);
 
         if (moveDirection.sqrMagnitude > 0.001f)
@@ -51,6 +58,8 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (isAttacking) return;
+
         moveInput = context.ReadValue<Vector2>();
 
         if (moveInput.magnitude < 0.01f)
@@ -59,23 +68,34 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.performed && weapon != null)
+        if (context.performed && weapon != null && !isAttacking && canAttack)
         {
             Debug.Log("Player is attacking!");
+            isAttacking = true;
+            canAttack = false;
+
             animator.SetTrigger("Attack");
 
             Collider weaponCollider = weapon.GetComponent<Collider>();
-            weaponCollider.enabled = true;
+            if (weaponCollider != null)
+                weaponCollider.enabled = true;
+
             Invoke(nameof(DisableWeaponCollider), 0.1f);
+            Invoke(nameof(FinishAttack), attackCooldown);
+            Invoke(nameof(ResetAttackCooldown), attackCooldown);
         }
     }
 
     void DisableWeaponCollider()
     {
-        Collider weaponCollider = weapon.GetComponent<Collider>();
-        if (weaponCollider != null)
+        if (weapon != null)
         {
-            weaponCollider.enabled = false;
+            Collider weaponCollider = weapon.GetComponent<Collider>();
+            if (weaponCollider != null)
+                weaponCollider.enabled = false;
         }
     }
+
+    void FinishAttack() => isAttacking = false;
+    void ResetAttackCooldown() => canAttack = true;
 }
