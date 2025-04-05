@@ -5,66 +5,47 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
 {
     private PlayerControls controls;
-    private NavMeshAgent agent;
+
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Weapon weapon;
+    [SerializeField] private Animator animator;
+
     private Vector2 moveInput;
-    private Weapon weapon;
-    private Animator animator;
 
     public float rotationSpeed = 10f;
+    public float attackCooldown = 0.8f;
+
+    private bool isAttacking = false;
+    private bool canAttack = true;
 
     void Awake()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-
-        if (players.Length > 1)
-        {
-            Debug.LogWarning("Duplicate player found. Destroying this one.");
-            Destroy(gameObject);
-            return;
-        }
-
         controls = new PlayerControls();
         controls.Player.SetCallbacks(this);
 
-        agent = GetComponent<NavMeshAgent>();
-        weapon = GetComponentInChildren<Weapon>();
-        animator = GetComponent<Animator>();
-
-        if (agent != null)
-        {
-            agent.updateRotation = false;
-            agent.updateUpAxis = false;
-        }
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
-    void OnEnable()
-    {
-        if (controls != null)
-            controls.Enable();
-    }
-
-    void OnDisable()
-    {
-        if (controls != null)
-            controls.Disable();
-    }
+    void OnEnable() => controls.Enable();
+    void OnDisable() => controls.Disable();
 
     void Update()
     {
-        if (agent == null || animator == null) return;
+        if (isAttacking)
+        {
+            agent.ResetPath();
+            return;
+        }
 
         Vector3 moveDirection = new Vector3(moveInput.x, 0, moveInput.y);
-
-        // Update animation parameter
         animator.SetFloat("Speed", moveDirection.magnitude);
 
         if (moveDirection.sqrMagnitude > 0.001f)
         {
-            // Move
             Vector3 targetPosition = transform.position + moveDirection.normalized;
             agent.SetDestination(targetPosition);
 
-            // Rotate
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             Quaternion smoothRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime * 100f);
             transform.rotation = smoothRotation;
@@ -77,26 +58,31 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (isAttacking) return;
+
         moveInput = context.ReadValue<Vector2>();
 
-        // Ignore tiny "ghost" input
         if (moveInput.magnitude < 0.01f)
             moveInput = Vector2.zero;
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.performed && weapon != null && animator != null)
+        if (context.performed && weapon != null && !isAttacking && canAttack)
         {
             Debug.Log("Player is attacking!");
+            isAttacking = true;
+            canAttack = false;
+
             animator.SetTrigger("Attack");
 
             Collider weaponCollider = weapon.GetComponent<Collider>();
             if (weaponCollider != null)
-            {
                 weaponCollider.enabled = true;
-                Invoke(nameof(DisableWeaponCollider), 0.1f);
-            }
+
+            Invoke(nameof(DisableWeaponCollider), 0.1f);
+            Invoke(nameof(FinishAttack), attackCooldown);
+            Invoke(nameof(ResetAttackCooldown), attackCooldown);
         }
     }
 
@@ -106,9 +92,10 @@ public class PlayerController : MonoBehaviour, PlayerControls.IPlayerActions
         {
             Collider weaponCollider = weapon.GetComponent<Collider>();
             if (weaponCollider != null)
-            {
                 weaponCollider.enabled = false;
-            }
         }
     }
+
+    void FinishAttack() => isAttacking = false;
+    void ResetAttackCooldown() => canAttack = true;
 }

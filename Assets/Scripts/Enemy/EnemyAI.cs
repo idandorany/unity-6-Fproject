@@ -12,6 +12,7 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private int currentPatrolIndex = 0;
     private bool canDamage = true;
+    private Animator animator;
 
     private enum State { Patrolling, Chasing, Attacking }
     private State currentState;
@@ -25,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         currentState = State.Patrolling;
 
         if (patrolPoints.Length > 0)
@@ -46,11 +48,13 @@ public class EnemyAI : MonoBehaviour
 
             case State.Chasing:
                 agent.SetDestination(player.position);
+                animator.SetFloat("Speed", agent.velocity.magnitude);
 
                 if (distance <= attackRange)
                 {
                     currentState = State.Attacking;
                     agent.ResetPath();
+                    animator.SetFloat("Speed", 0);
                 }
                 else if (!CanSeePlayer())
                 {
@@ -63,7 +67,10 @@ public class EnemyAI : MonoBehaviour
                 AttackBehavior();
 
                 if (distance > attackRange)
+                {
                     currentState = State.Chasing;
+                    animator.ResetTrigger("Attack");
+                }
                 break;
         }
     }
@@ -71,6 +78,8 @@ public class EnemyAI : MonoBehaviour
     void PatrolBehavior()
     {
         if (patrolPoints.Length == 0) return;
+
+        animator.SetFloat("Speed", agent.velocity.magnitude);
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
@@ -86,6 +95,8 @@ public class EnemyAI : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance <= attackRange && canDamage)
         {
+            animator.SetTrigger("Attack");
+
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {

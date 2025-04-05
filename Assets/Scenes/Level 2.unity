@@ -5573,6 +5573,18 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6538521023818272788, guid: 72ff1b093c6963740bb54cc8ec7ace05, type: 3}
+      propertyPath: agent
+      value: 
+      objectReference: {fileID: 1547060796}
+    - target: {fileID: 6538521023818272788, guid: 72ff1b093c6963740bb54cc8ec7ace05, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 1464558055}
+    - target: {fileID: 6538521023818272788, guid: 72ff1b093c6963740bb54cc8ec7ace05, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1547060795}
     - target: {fileID: 7985959957134863101, guid: 72ff1b093c6963740bb54cc8ec7ace05, type: 3}
       propertyPath: m_Name
       value: Player
@@ -5592,6 +5604,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1547060795}
   m_SourcePrefab: {fileID: 100100000, guid: 72ff1b093c6963740bb54cc8ec7ace05, type: 3}
+--- !u!114 &1464558055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2354659049011690774, guid: 72ff1b093c6963740bb54cc8ec7ace05, type: 3}
+  m_PrefabInstance: {fileID: 1464558054}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bef65bbb7beff394d992ad1f0dd1be9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1500860494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5708,6 +5731,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &1547060796 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 684586739783458937, guid: 72ff1b093c6963740bb54cc8ec7ace05, type: 3}
+  m_PrefabInstance: {fileID: 1464558054}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591092049
 GameObject:
   m_ObjectHideFlags: 0
